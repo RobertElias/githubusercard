@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <script>
+        'use strict';
+        
+        function loadJson(url) {
+          return fetch(url)
+            .then(response => response.json());
+        }
+        
+        function loadGithubUser(name) {
+          return fetch(`https://api.github.com/users/RobertElias}`)
+            .then(response => response.json());
+        }
+        
+        function showAvatar(githubUser) {
+          return new Promise(function(resolve, reject) {
+            let img = document.createElement('img');
+            img.src = githubUser.avatar_url;
+            img.className = "promise-avatar-example";
+            document.body.append(img);
+        
+            setTimeout(() => {
+              img.remove();
+              resolve(githubUser);
+            }, 3000);
+          });
+        }
+        
+        // Use them:
+        loadJson('https://api.github.com/users/RobertElias/')
+          .then(user => loadGithubUser(user.name))
+          .then(showAvatar)
+          .then(githubUser => alert(`Finished showing ${githubUser.name}`));
+          // ...
+        </script>
+</head>
+<body>
+    
+</body>
+</html>
